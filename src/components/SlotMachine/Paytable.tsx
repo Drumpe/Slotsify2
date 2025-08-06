@@ -7,7 +7,7 @@ const paytable = [
 
 function Paytable() {
   return (
-    <div className="mt-6 bg-white p-4 rounded shadow w-full max-w-sm">
+    <div className="mt-6 p-4 rounded shadow w-full max-w-sm">
       <h3 className="text-lg font-bold mb-2">Vinsttabell</h3>
       <ul>
         {paytable.map((entry, i) => (

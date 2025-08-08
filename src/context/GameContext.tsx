@@ -9,6 +9,8 @@ type GameContextType = {
   setIsSpinning: React.Dispatch<React.SetStateAction<boolean>>;
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
+  spinResult: number[] | null;
+  setSpinResult: (val: number[] | null) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -19,9 +21,16 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [balance, setBalance] = useState(100);
   const [isSpinning, setIsSpinning] = useState(false);
   const [username, setUsername] = useState('');
+  const [spinResult, setSpinResult] = useState<number[] | null>(null);
 
   return (
-    <GameContext.Provider value={{ stake, setStake, balance, setBalance, isSpinning, setIsSpinning, username, setUsername }}>
+    <GameContext.Provider value={{
+      stake, setStake, 
+      balance, setBalance, 
+      isSpinning, setIsSpinning, 
+      username, setUsername, 
+      spinResult, setSpinResult,
+    }}>
       {children}
     </GameContext.Provider>
   );

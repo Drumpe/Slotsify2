@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { Application, Assets, Container, Sprite } from 'pixi.js';
+import { Application, Assets, Container, Sprite, Graphics, GraphicsContext } from 'pixi.js';
 import { useGame } from '../../context/GameContext';
 
 const REEL_WIDTH = 80;
 const SYMBOL_SIZE = 80;
-const SPIN_SPEED = 0.2;
+const SPIN_SPEED = 0.5;
 const symbols = Array.from({ length: 9 }, (_, i) => `/images/symbol_${i}.webp`);
 const SYMBOLS_LEN = symbols.length;
 const BOUNCE_EFFECT = 0.12;
+const REEL_SPACING = 10;
 
 type ReelState = {
   container: Container;
@@ -63,7 +64,7 @@ function updateReelSpritesPosition(reel: any) {
 
 export default function SlotReels() {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const { spinResult, isSpinning } = useGame();
+  const { spinResult, isSpinning, setIsTweening } = useGame();
   const isSpinningRef = useRef(isSpinning);
   const [reels, setReels] = useState<ReelState[]>([]);
   const appRef = useRef<Application | null>(null);
@@ -79,7 +80,7 @@ export default function SlotReels() {
 
       const app = new Application();
       await app.init({
-        width: REEL_WIDTH * 3,
+        width: REEL_WIDTH * 3 + REEL_SPACING * 4,
         height: SYMBOL_SIZE * 3,
         backgroundColor: 0x000000,
         antialias: true,
@@ -93,7 +94,7 @@ export default function SlotReels() {
 
       for (let i = 0; i < 3; i++) {
         const reelContainer = new Container();
-        reelContainer.x = i * REEL_WIDTH;
+        reelContainer.x = i * (REEL_WIDTH + REEL_SPACING) + REEL_SPACING;
         app.stage.addChild(reelContainer);
 
         const reel: ReelState = {
@@ -117,6 +118,19 @@ export default function SlotReels() {
       }
       setReels(reelsArr);
 
+
+      const outerMask = new Graphics().rect(0, SYMBOL_SIZE / 2, SYMBOL_SIZE * 3 + REEL_SPACING * 4, SYMBOL_SIZE * 2).fill('blue');
+      app.stage.mask = outerMask;
+      const winLine = new Graphics()
+        .moveTo(0, SYMBOL_SIZE * 1.5)
+        .lineTo(SYMBOL_SIZE * 3 + REEL_SPACING * 4, SYMBOL_SIZE * 1.5)
+        .stroke({
+          width: 1,
+          color: 0xff0000
+        }); 
+      app.stage.addChild(winLine);
+
+
       app.ticker.add(() => {
         if (!isSpinningRef.current) return;
         for (const reel of reelsArr) {
@@ -133,37 +147,42 @@ export default function SlotReels() {
     };
   }, []);
 
+  const reelsStoppedCount = useRef(0);
+
   useEffect(() => {
     if (!isSpinning && spinResult && reels.length === 3) {
-      
-        const loops = 3;
-        const middleRowIndex = 1;
 
-        for (let i = 0; i < reels.length; i++) {
-          const reel = reels[i];
-          const stopIndex = spinResult[i]; 
-          const currentPos = reel.position; 
+      const loops = 2;
+      const middleRowIndex = 1;
 
-          // what remainder we currently have on the reel
-          const currentMod = mod(currentPos, SYMBOLS_LEN); 
-          const desiredMod = mod(middleRowIndex - stopIndex, SYMBOLS_LEN);
+      reelsStoppedCount.current = 0;
 
-          let deltaMod = mod(desiredMod - currentMod, SYMBOLS_LEN);
-          
-          if (deltaMod === 0) deltaMod = SYMBOLS_LEN;
+      for (let i = 0; i < reels.length; i++) {
+        const reel = reels[i];
+        const stopIndex = spinResult[i];
+        const currentPos = reel.position;
 
-          const delta = deltaMod + loops * SYMBOLS_LEN;
+        const currentMod = mod(currentPos, SYMBOLS_LEN);
+        const desiredMod = mod(middleRowIndex - stopIndex, SYMBOLS_LEN);
 
-          const targetPos = currentPos + delta;
+        let deltaMod = mod(desiredMod - currentMod, SYMBOLS_LEN);
 
-          // console.log(
-          //   `reel ${i}: currentPos=${currentPos.toFixed(3)} currentMod=${currentMod.toFixed(3)} ` +
-          //   `stopIndex=${stopIndex} desiredMod=${desiredMod} deltaMod=${deltaMod} targetPos=${targetPos}`
-          // );
+        if (deltaMod === 0) deltaMod = SYMBOLS_LEN;
 
-          tweenTo(reel, targetPos, 1500 + i * 600);
-          console.log(`reel ${i} final pos=${reel.position} visibleIndex=${mod(Math.floor(reel.position), SYMBOLS_LEN)}`);
+        const delta = deltaMod + loops * SYMBOLS_LEN;
+        const targetPos = currentPos + delta;
+
+        tweenTo(reel, targetPos, 1500 + i * 400 / SPIN_SPEED,
+        () => {
+          reelsStoppedCount.current += 1;
+          if (reelsStoppedCount.current === reels.length -1) { // -1 because we wait for the second last reel to finish
+            setIsTweening(false);
+          }
         }
+        );
+        console.log(`reel ${i} final pos=${reel.position} visibleIndex=${mod(Math.floor(reel.position), SYMBOLS_LEN)}`);
+
+      }
     }
   }, [isSpinning, spinResult, reels]);
 

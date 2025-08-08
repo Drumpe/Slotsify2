@@ -4,17 +4,18 @@ const BetSelector = () => {
   const { stake, setStake, isSpinning } = useGame()
 
   return (
-    <div className="my-2">
-      <label htmlFor="bet">Bet multiplier: </label>
+    <div className="my-2 ">
+      <label htmlFor="bet">Bet: </label>
       <select
         id="bet"
         value={stake}
         disabled={isSpinning}
         onChange={(e) => setStake(Number(e.target.value))}
+        className="ml-2 p-1 border rounded bg-black"
       >
-        {[1, 2, 5, 10].map((val) => (
+        {[1, 2, 5, 10, 50, 100].map((val) => (
           <option key={val} value={val}>
-            {val}x
+            {val} {val > 1 ? 'coins':'coin'}
           </option>
         ))}
       </select>

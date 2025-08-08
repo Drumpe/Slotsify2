@@ -32,19 +32,19 @@ function chooseSymbol() {
 }
 
 // Helper to check win and payout
-function getPayout(spin, multiplier) {
+function getPayout(spin, stake) {
   const key = spin.join(',')
 
   // Check for three-of-a-kind
-  if (WIN_TABLE[key] !== undefined) return { isWin: true, payout: WIN_TABLE[key] * multiplier }
+  if (WIN_TABLE[key] !== undefined) return { isWin: true, payout: WIN_TABLE[key] * stake }
 
   // Check for two-of-a-kind
   const twoKey = `${spin[0]},${spin[1]},*`
-  if (WIN_TABLE[twoKey] !== undefined && spin[0] === spin[1]) return { isWin: true, payout: WIN_TABLE[twoKey] * multiplier }
+  if (WIN_TABLE[twoKey] !== undefined && spin[0] === spin[1]) return { isWin: true, payout: WIN_TABLE[twoKey] * stake }
 
   // Check for one-of-a-kind
   const oneKey = `${spin[0]},*,*`
-  if (WIN_TABLE[oneKey] !== undefined) return { isWin: true, payout: WIN_TABLE[oneKey] * multiplier }
+  if (WIN_TABLE[oneKey] !== undefined) return { isWin: true, payout: WIN_TABLE[oneKey] * stake }
 
   // No win
   return { isWin: false, payout: 0 }
@@ -66,7 +66,7 @@ const handler: Handler = async (event) => {
       body: JSON.stringify({ message: 'Missing or invalid parameters' }),
     }
   }
-  const betMultiplier = stake;
+
   // Fetch the user's profile
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
@@ -81,12 +81,11 @@ const handler: Handler = async (event) => {
     }
   }
 
-  const cost = betMultiplier * 10
   const currentCoins = profile.coins
   
-  console.log(`Current coins: ${currentCoins}, Bet cost: ${cost}, Bet multiplier: ${betMultiplier}`);
+  console.log(`Current coins: ${currentCoins}, Bet cost: ${stake}`);
 
-  if (currentCoins < cost) {
+  if (currentCoins < stake) {
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Not enough coins' }),
@@ -95,8 +94,8 @@ const handler: Handler = async (event) => {
 
   const result = Array.from({ length: 3 }, () => chooseSymbol())
 
-  const { isWin, payout } = getPayout(result, betMultiplier)
-  const newBalance = currentCoins - cost + payout
+  const { isWin, payout } = getPayout(result, stake)
+  const newBalance = currentCoins - stake + payout
 
   // Update coins
   const { error: updateError } = await supabase
@@ -113,7 +112,7 @@ const handler: Handler = async (event) => {
   
   // Log the spin result in development mode
   if (process.env.NODE_ENV === 'development') {
-    console.log(`[SPIN] user: ${userId}, bet: ${betMultiplier}, result: [${result}], payout: ${payout}`);
+    console.log(`[SPIN] user: ${userId}, bet: ${stake}, result: [${result}], payout: ${payout}`);
   }
 
   return {

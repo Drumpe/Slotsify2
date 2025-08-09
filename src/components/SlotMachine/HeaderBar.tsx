@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import { useGame } from '../../context/GameContext'
 
 const HeaderBar = () => {

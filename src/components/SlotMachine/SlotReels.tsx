@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Application, Assets, Container, Sprite, Graphics, GraphicsContext } from 'pixi.js';
+import { Application, Assets, Container, Sprite, Graphics } from 'pixi.js';
 import { useGame } from '../../context/GameContext';
 
 const REEL_WIDTH = 80;

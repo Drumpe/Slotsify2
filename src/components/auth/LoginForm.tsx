@@ -3,8 +3,6 @@ import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabaseClient'
 import { useNavigate, Link } from 'react-router-dom'
 
-//TODO: update balance and coins after login
-
 export default function LoginForm() {
   const { setUser } = useAuth()
 

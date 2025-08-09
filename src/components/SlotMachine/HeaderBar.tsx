@@ -11,10 +11,8 @@ const HeaderBar = () => {
     coinRef.current = balance;
     if (payout > 0) {
       setWinMessage(`You won ${payout} coins!`);
-    } else {
-      setWinMessage("No winning this time!");
     }
-    const timer = setTimeout(() => setWinMessage(""), 3000);
+    const timer = setTimeout(() => setWinMessage(""), 500 + 500*Math.log(payout));
     return () => clearTimeout(timer);
   }, [isTweening]);
 
@@ -24,7 +22,8 @@ const HeaderBar = () => {
 
   return (
     <div className="header-bar">
-      <h3>Coins: { coinRef.current }    {winMessage}</h3>
+      <h3>Coins: { coinRef.current }</h3>
+      <h3>{winMessage} &nbsp; </h3>
     </div>
   )
 }

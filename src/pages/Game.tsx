@@ -9,7 +9,7 @@ import SlotReels from '../components/SlotMachine/SlotReels';
 
 
 const Game = () => {
-  const { setBalance, setUsername } = useGame()
+  const { setBalance, setUsername, setCoins } = useGame()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -27,6 +27,7 @@ const Game = () => {
       if (response.ok) {
         setUsername(result.username)
         setBalance(result.coins)
+        setCoins(result.coins)
       } else {
         console.error(result.message)
       }

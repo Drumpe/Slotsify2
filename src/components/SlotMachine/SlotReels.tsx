@@ -43,6 +43,7 @@ function tweenTo(reel: ReelState, target: number, duration: number, onComplete?:
       requestAnimationFrame(step);
     } else {
       reel.position = Math.round(target);
+      reel.position = reel.position % SYMBOLS_LEN;
       updateReelSpritesPosition(reel);
       onComplete?.();
     }
@@ -127,7 +128,7 @@ export default function SlotReels() {
         .stroke({
           width: 1,
           color: 0xff0000
-        }); 
+        });
       app.stage.addChild(winLine);
 
 
@@ -173,15 +174,14 @@ export default function SlotReels() {
         const targetPos = currentPos + delta;
 
         tweenTo(reel, targetPos, 1500 + i * 400 / SPIN_SPEED,
-        () => {
-          reelsStoppedCount.current += 1;
-          if (reelsStoppedCount.current === reels.length -1) { // -1 because we wait for the second last reel to finish
-            setIsTweening(false);
+          () => {
+            reelsStoppedCount.current += 1;
+            if (reelsStoppedCount.current === reels.length - 1) { // -1 because we wait for the second last reel to finish
+              setIsTweening(false);
+            }
           }
-        }
         );
-        console.log(`reel ${i} final pos=${reel.position} visibleIndex=${mod(Math.floor(reel.position), SYMBOLS_LEN)}`);
-
+        //console.log(`reel ${i} final pos=${reel.position} visibleIndex=${mod(Math.floor(reel.position), SYMBOLS_LEN)}`);
       }
     }
   }, [isSpinning, spinResult, reels]);

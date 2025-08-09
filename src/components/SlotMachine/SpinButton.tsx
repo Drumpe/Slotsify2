@@ -2,29 +2,31 @@ import { useGame } from '../../context/GameContext'
 import { useAuth } from '../../context/AuthContext'
 
 const SpinButton = () => {
-  const { stake, isSpinning, setIsSpinning, isTweening, setIsTweening, setBalance, setSpinResult } = useGame()
+  const { stake, isSpinning, setIsSpinning, isTweening, setIsTweening, balance, setBalance, setSpinResult, setIsWin, setPayout, setCoins } = useGame()
   const { user } = useAuth()
 
   const handleSpin = async () => {
     if (isSpinning) return
     setIsSpinning(true)
-    //TODO: minska coins med stake
+    setCoins(balance - stake)
     try {
-       
+
       console.log(`Spinning: userId: ${user?.id}, stake: ${stake}`)
 
       const response = await fetch('/.netlify/functions/spin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user?.id, stake}),
+        body: JSON.stringify({ userId: user?.id, stake }),
       })
+
 
       const result = await response.json()
       console.log('Spin result:', result.result)
       if (response.ok) {
         setBalance(result.newBalance)
         setSpinResult(result.result)
-        // TODO: borde sätta isWin och payout i GameContext
+        setIsWin(result.isWin)
+        setPayout(result.payout)
         setIsTweening(true)
         console.log('You won:', result.isWin ? 'Yes' : 'No')
         console.log('Payout:', result.payout)

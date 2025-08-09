@@ -5,8 +5,14 @@ type GameContextType = {
   setStake: React.Dispatch<React.SetStateAction<number>>;
   balance: number;
   setBalance: React.Dispatch<React.SetStateAction<number>>;
+  coins: number;
+  setCoins: React.Dispatch<React.SetStateAction<number>>;
+  payout: number;
+  setPayout: React.Dispatch<React.SetStateAction<number>>;
   isSpinning: boolean;
   setIsSpinning: React.Dispatch<React.SetStateAction<boolean>>;
+  isWin: boolean;
+  setIsWin: React.Dispatch<React.SetStateAction<boolean>>;
   isTweening: boolean;
   setIsTweening: React.Dispatch<React.SetStateAction<boolean>>;
   username: string;
@@ -21,6 +27,9 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [stake, setStake] = useState(1);
   const [balance, setBalance] = useState(100);
+  const [coins, setCoins] = useState(100);
+  const [payout, setPayout] = useState(0);
+  const [isWin, setIsWin] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
   const [isTweening, setIsTweening] = useState(false);
   const [username, setUsername] = useState('');
@@ -29,7 +38,10 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <GameContext.Provider value={{
       stake, setStake, 
-      balance, setBalance, 
+      balance, setBalance,
+      coins, setCoins,
+      payout, setPayout,
+      isWin, setIsWin,
       isSpinning, setIsSpinning,
       isTweening, setIsTweening,
       username, setUsername, 

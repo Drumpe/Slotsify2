@@ -82,7 +82,7 @@ const handler: Handler = async (event) => {
   }
 
   const currentCoins = profile.coins
-  
+
   console.log(`Current coins: ${currentCoins}, Bet cost: ${stake}`);
 
   if (currentCoins < stake) {
@@ -109,20 +109,23 @@ const handler: Handler = async (event) => {
       body: JSON.stringify({ message: 'Failed to update coins' }),
     }
   }
-  
+
   // Log the spin result in development mode
   if (process.env.NODE_ENV === 'development') {
     console.log(`[SPIN] user: ${userId}, bet: ${stake}, result: [${result}], payout: ${payout}`);
   }
 
+  interface SpinData {
+    result: number[];
+    isWin: boolean;
+    payout: number;
+    newBalance: number;
+  }
+  const data: SpinData = { result, isWin, payout, newBalance };
+
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      result,
-      isWin,
-      payout,
-      newBalance,
-    }),
+    body: JSON.stringify(data),
   }
 }
 

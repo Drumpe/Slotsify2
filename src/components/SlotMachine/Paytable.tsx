@@ -5,21 +5,10 @@ import { useGame } from '../../context/GameContext';
 const symbols = Array.from({ length: 9 }, (_, i) => `/images/symbol_${i}.webp`);
 import symbol_empty from '/images/symbol_empty.webp';
 
-// Map symbol numbers to image imports
-const SYMBOL_IMAGES: Record<string, string> = {
-  '0': symbols[0],
-  '1': symbols[1],
-  '2': symbols[2],
-  '3': symbols[3],
-  '4': symbols[4],
-  '5': symbols[5],
-  '6': symbols[6],
-  '7': symbols[7],
-  '8': symbols[8],
-  '*': symbol_empty,
-};
-
-
+const SYMBOL_IMAGES: Record<string, string> = { '*': symbol_empty };
+for (let i = 0; i <= 8; i++) {
+  SYMBOL_IMAGES[i.toString()] = symbols[i];
+}
 
 const PayTable: React.FC = () => {
   const { stake } = useGame()

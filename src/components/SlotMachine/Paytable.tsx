@@ -1,5 +1,5 @@
 import React from 'react';
-import { WIN_TABLE } from '../../utils/winTable';
+import { WIN_TABLE } from '../../../shared/winTable';
 import { useGame } from '../../context/GameContext';
 
 const symbols = Array.from({ length: 9 }, (_, i) => `/images/symbol_${i}.webp`);

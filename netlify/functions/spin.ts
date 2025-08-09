@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions'
 import { createClient } from '@supabase/supabase-js'
-import { WIN_TABLE } from "./winTable";
+import { WIN_TABLE } from "../../shared/winTable";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,

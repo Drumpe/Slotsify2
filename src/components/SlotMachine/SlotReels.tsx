@@ -220,7 +220,7 @@ export default function SlotReels() {
 
         tweenTo(reel, targetPos, 1500 + (i * 400) / SPIN_SPEED, () => {
           reelsStoppedCount.current += 1;
-          if (reelsStoppedCount.current === reels.length) {
+          if (reelsStoppedCount.current === reels.length -1) { //Need -1 here since tweening takes time
             setIsTweening(false);
           }
         });

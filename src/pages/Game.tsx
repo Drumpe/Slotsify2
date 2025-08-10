@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { useGame } from '../context/GameContext'
 import HeaderBar from '../components/SlotMachine/HeaderBar';
-import BetSelector from '../components/SlotMachine/BetSelector';
-import SpinButton from '../components/SlotMachine/SpinButton';
+import Footer from '../components/SlotMachine/Footer'
 import Paytable from '../components/SlotMachine/Paytable';
 import SlotReels from '../components/SlotMachine/SlotReels';
 
@@ -37,12 +36,17 @@ const Game = () => {
   }, [setBalance, setUsername])
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col pb-20 bg-blue-100">
       <HeaderBar />
-      <SlotReels />
-      <BetSelector />
-      <SpinButton />
-      <Paytable />
+      <div className="flex-1 flex flex-col lg:flex-row gap-4 p-4">
+        <div className="flex-1 flex flex-col justify-center relative">
+          <SlotReels />
+        </div>
+        <div className="hidden md:block md:w-80 md:w-96">
+          <Paytable />
+        </div>
+      </div>
+      <Footer />
     </div>
   )
 }

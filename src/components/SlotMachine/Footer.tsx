@@ -5,11 +5,11 @@ const Footer = () => {
 
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50">
-      <div className="flex items-center gap-2 sm:gap-4">
+    <div className="fixed flex justify-between items-center bottom-0 left-0 right-0 z-50 bg-blue-400 p-4">
+      <div className="gap-2 sm:gap-4">
         <BetSelector />
       </div>
-      <div className="flex items-center gap-1 sm:gap-2">
+      <div className="gap-5 sm:gap-2">
         <SpinButton />
       </div>
     </div>

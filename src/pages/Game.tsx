@@ -42,7 +42,7 @@ const Game = () => {
         <div className="flex-1 flex flex-col justify-center relative">
           <SlotReels />
         </div>
-        <div className="hidden md:block md:w-80 md:w-96">
+        <div className="hidden lg:block lg:w-80 xl:w-96">
           <Paytable />
         </div>
       </div>

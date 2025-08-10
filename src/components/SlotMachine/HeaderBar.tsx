@@ -21,7 +21,7 @@ const HeaderBar = () => {
   }, [coins]);
 
   return (
-    <div className="header-bar">
+    <div className="header-bar bg-blue-400">
       <h3>Coins: { coinRef.current }</h3>
       <h3>{winMessage} &nbsp; </h3>
     </div>

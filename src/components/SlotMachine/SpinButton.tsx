@@ -43,7 +43,17 @@ const SpinButton = () => {
   }
 
   return (
-    <button onClick={handleSpin} disabled={isSpinning || isTweening}>
+    <button
+      onClick={handleSpin}
+      disabled={isSpinning || isTweening}
+      className={`
+        bg-gradient-to-r from-blue-700 to-blue-900 
+        text-white font-bold py-3 p-6 rounded-full 
+        shadow-lg  w-40 
+        focus:outline-none transition-transform duration-300 ease-in-out
+        ${isSpinning || isTweening ? 'scale-95' : 'hover:scale-100'}
+      `}
+    >
       {isSpinning || isTweening ? 'Spinning...' : 'Spin'}
     </button>
   )

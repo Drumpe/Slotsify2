@@ -1,29 +1,58 @@
 import { use, useEffect, useRef, useState } from 'react'
 import { useGame } from '../../context/GameContext'
+import { useAuth } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+
 
 const HeaderBar = () => {
-  const { balance, isTweening, coins, payout } = useGame()
+  const { balance, isTweening, isSpinning, coins, payout } = useGame()
+  const { user, signOut } = useAuth()
   const coinRef = useRef(0);
   const [winMessage, setWinMessage] = useState('');
+
+  const navigate = useNavigate()
+
+  const handleSignOut = async (e: React.FormEvent) => {
+    e.preventDefault()
+    signOut
+    navigate('/')
+  }
 
   useEffect(() => {
     if (isTweening) return;
     coinRef.current = balance;
-    if (payout > 0) {
-      setWinMessage(`You won ${payout} coins!`);
+    if (isSpinning) {
+      setWinMessage(``);
+    } else {
+      if (payout > 0) {
+        setWinMessage(`You won ${payout} coins!`);
+      } else {
+        setWinMessage(`Try again`)
+      }
     }
-    const timer = setTimeout(() => setWinMessage(""), 500 + 500*Math.log(payout));
-    return () => clearTimeout(timer);
-  }, [isTweening]);
+  }, [isTweening, isSpinning]);
 
   useEffect(() => {
     coinRef.current = coins;
   }, [coins]);
 
   return (
-    <div className="header-bar bg-blue-400">
-      <h3>Coins: { coinRef.current }</h3>
-      <h3>{winMessage} &nbsp; </h3>
+    <div className="flex bg-blue-400 p-3">
+      <div className="flex items-center gap-1 text-yellow-400 h-8">
+        <span>🪙 {coinRef.current.toLocaleString()}</span>
+      </div>
+      <div className="flex-1 text-center gap-1 text-yellow-400 animate-pulse">
+        <span>{winMessage}</span>
+      </div>
+      {user && (
+        <button
+          onClick={handleSignOut}
+          className="px-3 py-1 bg-red-300 rounded hover:bg-red-700"
+        >
+          Sign Out
+        </button>
+      )}
     </div>
   )
 }

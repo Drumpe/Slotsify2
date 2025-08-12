@@ -34,7 +34,7 @@ export default function LoginForm() {
       }
 
     }
-    console.log('Login response:', data, error)
+    // console.log('Login response:', data, error)
     setLoading(false)
   }
 
@@ -78,7 +78,7 @@ export default function LoginForm() {
           {loading ? 'Logging in...' : 'Login'}
         </button>
 
-        {message && <p className="text-sm text-center text-red-600">{message}</p>}
+        {message && <p className="text-sm text-center text-red-900">{message}</p>}
       </form>
       <div className="text-sm text-center mt-2">
         Don’t have an account yet?{' '}

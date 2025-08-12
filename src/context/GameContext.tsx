@@ -23,7 +23,6 @@ type GameContextType = {
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
-
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [stake, setStake] = useState(1);
   const [balance, setBalance] = useState(0);

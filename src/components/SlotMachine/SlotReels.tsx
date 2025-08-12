@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Application, Assets, Container, Sprite, Graphics } from 'pixi.js';
 import { useGame } from '../../context/GameContext';
+import { useAuth } from '../../context/AuthContext';
 
 const NUMBER_OF_REELS = 3;
 const REEL_WIDTH = 80;    // logical units
@@ -59,7 +60,7 @@ export default function SlotReels() {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<Application | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
-
+  const { user } = useAuth();
   const { spinResult, isSpinning, setIsTweening } = useGame();
   const isSpinningRef = useRef(isSpinning);
   const [reels, setReels] = useState<ReelState[]>([]);
@@ -69,9 +70,23 @@ export default function SlotReels() {
   const BASE_WIDTH = REEL_WIDTH * NUMBER_OF_REELS + REEL_SPACING * (NUMBER_OF_REELS + 1);
   const BASE_HEIGHT = SYMBOL_SIZE * 3;
 
+  function resetPixiContainer() {
+    appRef.current?.destroy(true, true);
+    appRef.current = null;
+    if (containerRef.current) {
+      containerRef.current.innerHTML = '';
+    }
+    setReels([]);
+  }
+
+  useEffect(() => {
+    if(!user) resetPixiContainer()
+  },[user])
+
   useEffect(() => { isSpinningRef.current = isSpinning; }, [isSpinning]);
 
   useEffect(() => {
+    if (!user) return;
     let destroyed = false;
 
     const init = async () => {
@@ -101,7 +116,8 @@ export default function SlotReels() {
         reelContainer.x = i * (REEL_WIDTH + REEL_SPACING) + REEL_SPACING;
         app.stage.addChild(reelContainer);
 
-        const reel: ReelState = { container: reelContainer, symbols: [], position: 0 };
+        const initialPosition = Math.floor(Math.random() * SYMBOLS_LEN);
+        const reel: ReelState = { container: reelContainer, symbols: [], position: initialPosition };
 
         for (let j = 0; j < symbols.length; j++) {
           const texture = Assets.get(symbols[j]);
@@ -118,6 +134,7 @@ export default function SlotReels() {
           reel.symbols.push(sprite);
         }
         reelsArr.push(reel);
+        updateReelSpritesPosition(reel);
       }
       setReels(reelsArr);
 
@@ -195,7 +212,7 @@ export default function SlotReels() {
       appRef.current?.destroy(true, true);
       appRef.current = null;
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (!isSpinning && spinResult && reels.length > 0) {
@@ -220,7 +237,7 @@ export default function SlotReels() {
 
         tweenTo(reel, targetPos, 1500 + (i * 400) / SPIN_SPEED, () => {
           reelsStoppedCount.current += 1;
-          if (reelsStoppedCount.current === reels.length -1) { //Need -1 here since tweening takes time
+          if (reelsStoppedCount.current === reels.length - 1) { //Need -1 here since tweening takes time
             setIsTweening(false);
           }
         });
@@ -228,7 +245,5 @@ export default function SlotReels() {
     }
   }, [isSpinning, spinResult, reels, setIsTweening]);
 
-  // Make sure the container can actually size the canvas
-  // e.g., via CSS: .slotCanvas { width: 100%; height: 100%; }
   return <div ref={containerRef} className="slotCanvas" style={{ width: '100%', height: '100%' }} />;
 }

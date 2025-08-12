@@ -83,9 +83,7 @@ const handler: Handler = async (event) => {
 
   const currentCoins = profile.coins
 
-  console.log(`Current coins: ${currentCoins}, Bet cost: ${stake}`);
-
-  if (currentCoins < stake) {
+if (currentCoins < stake) {
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Not enough coins' }),
@@ -110,10 +108,8 @@ const handler: Handler = async (event) => {
     }
   }
 
-  // Log the spin result in development mode
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[SPIN] user: ${userId}, bet: ${stake}, result: [${result}], payout: ${payout}`);
-  }
+
+  console.log(`[SPIN] user: ${userId}, bet: ${stake}, result: [${result}], payout: ${payout}`);
 
   interface SpinData {
     result: number[];

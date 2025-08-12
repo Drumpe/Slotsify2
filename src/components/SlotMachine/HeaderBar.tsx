@@ -3,33 +3,35 @@ import { useGame } from '../../context/GameContext'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
-
-
 const HeaderBar = () => {
-  const { balance, isTweening, isSpinning, coins, payout } = useGame()
-  const { user, signOut } = useAuth()
+  const { balance, isTweening, isSpinning, coins, payout } = useGame();
+  const { user, signOut } = useAuth();
   const coinRef = useRef(0);
   const [winMessage, setWinMessage] = useState('');
+  const [justLoggedIn, setJustLoggedIn] = useState(true);
 
   const navigate = useNavigate()
 
   const handleSignOut = async (e: React.FormEvent) => {
-    e.preventDefault()
-    signOut
-    navigate('/')
+    e.preventDefault();
+    setWinMessage(``);
+    await signOut();
+    navigate('/');
   }
 
   useEffect(() => {
+    if(justLoggedIn) {
+      setWinMessage('');
+      setJustLoggedIn(false);
+      coinRef.current = balance;
+      return;
+    }
     if (isTweening) return;
     coinRef.current = balance;
     if (isSpinning) {
       setWinMessage(``);
     } else {
-      if (payout > 0) {
-        setWinMessage(`You won ${payout} coins!`);
-      } else {
-        setWinMessage(`Try again`)
-      }
+      setWinMessage(payout > 0 ? `You won ${payout} coins!` : `Try again`);
     }
   }, [isTweening, isSpinning]);
 
@@ -39,16 +41,16 @@ const HeaderBar = () => {
 
   return (
     <div className="flex bg-blue-400 p-3">
-      <div className="flex items-center gap-1 text-yellow-400 h-8">
+      <div className="flex items-center gap-1 font-bold text-yellow-400 h-8">
         <span>🪙 {coinRef.current.toLocaleString()}</span>
       </div>
-      <div className="flex-1 text-center gap-1 text-yellow-400 animate-pulse">
+      <div className="flex-1 text-center font-bold gap-1 text-yellow-400 animate-pulse">
         <span>{winMessage}</span>
       </div>
       {user && (
         <button
           onClick={handleSignOut}
-          className="px-3 py-1 bg-red-300 rounded hover:bg-red-700"
+          className="px-3 py-1 bg-red-300 rounded-full hover:bg-red-700"
         >
           Sign Out
         </button>

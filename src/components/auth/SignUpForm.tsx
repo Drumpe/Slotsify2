@@ -46,7 +46,7 @@ export default function SignUpForm() {
         const response = await fetch('/.netlify/functions/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             userId: data.user.id,
             username: username.toLowerCase(),
           }),
@@ -70,54 +70,63 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form
-        onSubmit={handleSignUp}
-        className="max-w-sm mx-auto p-4 rounded-xl shadow-xl bg-gray-800 space-y-4"
-      >
-        <h2 className="text-xl font-bold text-center">Create Account</h2>
+      <div className="flex items-center justify-center w-full">
+        <div className="w-full mx-auto p-5 bg-blue-200 rounded">
+          <img src="/images/cherry_symbol.png" alt="Slotsify2-Cherry" 
+          className='mx-auto max-w-60 shadow-xl bg-red-400' />
+          <p className="text-center text-red-900 p-5 font-shantell text-6xl">
+            Slotsify2
+          </p>
+          <form
+            onSubmit={handleSignUp}
+            className="w-full max-w-sm mx-auto p-4 rounded-xl shadow-2xl bg-red-400 space-y-4"
+          >
+            <h2 className="text-xl font-bold text-center">Create Account</h2>
 
-        <input
-          type="text"
-          placeholder="Name"
-          className="w-full p-2 border rounded"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full p-2 border rounded"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full p-2 border rounded"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full p-2 border rounded"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {loading ? 'Creating Account...' : 'Sign Up'}
-        </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              {loading ? 'Creating Account...' : 'Sign Up'}
+            </button>
 
-        {message && <p className="text-sm text-center text-red-600">{message}</p>}
-      </form>
-      <div className="text-sm text-center">
-        Already have an account?{' '}
-        <Link to="/" className="text-blue-600 hover:underline">
-          Log in here
-        </Link>
+            {message && <p className="text-sm text-center text-red-600">{message}</p>}
+          </form>
+          <div className="text-sm text-center">
+            Already have an account?{' '}
+            <Link to="/" className="text-blue-600 hover:underline">
+              Log in here
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   )

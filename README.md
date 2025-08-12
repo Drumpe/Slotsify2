@@ -1,5 +1,3 @@
----
-
 ```markdown
 # Slotsify2
 
@@ -8,18 +6,18 @@ Players can sign up, log in, and enjoy spinning the reels with virtual coins —
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔑 **Authentication** – Sign up, log in, and log out with Supabase.
-- 🎡 **Slot Machine Gameplay** – Spin reels, place bets, and win based on the paytable.
-- 📊 **Dynamic Paytable** – Real-time payout updates based on current bet.
-- 💾 **Persistent Data** – Coins & profiles stored securely in Supabase.
-- 📱 **Responsive Design** – Optimized for desktop and mobile.
-- 🎨 **Pixi.js Animations** – Smooth and visually appealing reel spins.
+- **Authentication** – Sign up, log in, and log out with Supabase.
+- **Slot Machine Gameplay** – Spin reels, place bets, and win based on the paytable.
+- **Dynamic Paytable** – Real-time payout updates based on current bet.
+- **Persistent Data** – Coins & profiles stored securely in Supabase.
+- **Responsive Design** – Optimized for desktop and mobile.
+- **Pixi.js Animations** – Smooth and visually appealing reel spins.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer         | Technology |
 |---------------|------------|
@@ -29,23 +27,7 @@ Players can sign up, log in, and enjoy spinning the reels with virtual coins —
 
 ---
 
-## 📂 Project Structure
-
-```plaintext
-slotsify2/
-├── public/         # Static assets (images, icons, etc.)
-├── src/
-│   ├── components/ # UI components
-│   ├── context/    # Global state & contexts
-│   ├── functions/  # Netlify serverless functions
-│   └── pages/      # Page components
-├── package.json
-└── vite.config.ts
-```
-
----
-
-## 🚀 Installation
+## Installation
 
 1️⃣ **Clone the repository**
 ```bash
@@ -71,10 +53,13 @@ SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
 ```bash
 npm run dev
 ```
-
+or if you have netlify client installed
+```bash
+netlify dev
+```
 ---
 
-## 🌐 Deployment (Netlify)
+## Deployment (Netlify)
 
 1. Connect your repository to **Netlify**.
 2. Set **Build Command**:  
@@ -89,7 +74,7 @@ npm run dev
 
 ---
 
-## 🎮 Usage
+## Usage
 
 1. **Sign Up** – Create an account with username, email, and password.  
 2. **Log In** – Access your account and start spinning.  
@@ -97,19 +82,7 @@ npm run dev
 
 ---
 
-## 💰 Paytable
-
-The paytable defines symbol payouts dynamically based on your bet.  
-For example:  
-| Symbol | 3 in a row |
-|--------|------------|
-| 🍒 Cherry | x5 |
-| 🍋 Lemon  | x10 |
-| ⭐ Star   | x50 |
-
----
-
-## 📜 License
+## License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
 
@@ -124,7 +97,7 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 
-> 💡 Enjoy spinning and may the reels be in your favor!
-```
+> Enjoy spinning and may the reels be in your favor!
 
----
+© Ola Persson Orator
+```

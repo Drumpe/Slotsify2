@@ -15,7 +15,7 @@ const PayTable: React.FC = () => {
   return (
     <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg max-w-lg mx-auto">
 
-      <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-2">
         {Object.entries(WIN_TABLE).map(([combination, payout], idx) => {
           const symbols = combination.split(',');
 

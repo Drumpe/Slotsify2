@@ -14,7 +14,7 @@ const BetSelector = () => {
         className="
         bg-gradient-to-r from-blue-700 to-blue-900 
         text-white font-bold py-3 p-6 rounded-full 
-        shadow-lg  w-40 "
+        shadow-lg  w-28 "
       >
         {[1, 2, 5, 10, 50, 100].map((val) => (
           <option key={val} value={val} className='bg-blue-700 hover:bg-blue-900'>

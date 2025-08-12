@@ -40,7 +40,7 @@ const HeaderBar = () => {
   }, [coins]);
 
   return (
-    <div className="flex bg-blue-400 p-3">
+    <div className="flex bg-blue-400 p-3 fixed top-0 left-0 right-0 z-50">
       <div className="flex items-center gap-1 font-bold text-yellow-400 h-8">
         <span>🪙 {coinRef.current.toLocaleString()}</span>
       </div>

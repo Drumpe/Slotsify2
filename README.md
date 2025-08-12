@@ -1,9 +1,9 @@
-```markdown
 # Slotsify2
 
 **Slotsify2** is a modern web-based slot machine game built with **React**, **TypeScript**, and **Supabase**.  
 Players can sign up, log in, and enjoy spinning the reels with virtual coins — all while their progress is saved securely.
 
+🌐 Live: [https://slotsify2.netlify.app/](https://slotsify2.netlify.app/)
 ---
 
 ## Features

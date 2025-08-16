@@ -9,32 +9,34 @@ import WinCelebration from '../components/SlotMachine/WinCelebration';
 
 
 const Game = () => {
-  const { setBalance, setUsername, setCoins, showCelebration } = useGame()
+  const { setBalance, setUsername, showCelebration, setLoadingProfile } = useGame();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const { data: userData } = await supabase.auth.getUser()
-      const user = userData?.user
-      if (!user) return
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData?.user;
+      if (!user) return;
+      setLoadingProfile(true);
 
       const response = await fetch('/.netlify/functions/getProfile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id }),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
       if (response.ok) {
-        setUsername(result.username)
-        setBalance(result.coins)
-        setCoins(result.coins)
+        setUsername(result.username);
+        setBalance(result.coins);
+
       } else {
-        console.error(result.message)
+        console.error(result.message);
       }
+      setLoadingProfile(false);
     }
 
-    fetchUserProfile()
-  }, [setBalance, setUsername])
+    fetchUserProfile();
+  }, [setBalance, setUsername]);
 
   return (
     <div className="min-h-screen flex flex-col pb-20 bg-blue-100">

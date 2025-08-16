@@ -23,7 +23,6 @@ export default function WinCelebration() {
     const colors = ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FA9A', '#87CEEB'];
     const emojis = ['🎉', '⭐', '💎', '🏆', '🎊', '✨', '💫', '🌟'];
 
-    console.log(`In celebration ${payout}`)
     for (let i = 0; i < particleCount; i++) {
       newParticles.push({
         id: i,

@@ -34,7 +34,6 @@ export default function LoginForm() {
       }
 
     }
-    // console.log('Login response:', data, error)
     setLoading(false)
   }
 

@@ -4,13 +4,13 @@ import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const HeaderBar = () => {
-  const { balance, isTweening, isSpinning, coins, payout } = useGame();
+  const { balance, isTweening, isSpinning, coins, payout, loadingProfile } = useGame();
   const { user, signOut } = useAuth();
   const coinRef = useRef(0);
   const [winMessage, setWinMessage] = useState('');
   const [justLoggedIn, setJustLoggedIn] = useState(true);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSignOut = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ const HeaderBar = () => {
   }
 
   useEffect(() => {
-    if(justLoggedIn) {
+    if (justLoggedIn) {
       setWinMessage('');
       setJustLoggedIn(false);
       coinRef.current = balance;
@@ -39,10 +39,12 @@ const HeaderBar = () => {
     coinRef.current = coins;
   }, [coins]);
 
-  return (
+  const displayedCoins = isSpinning || isTweening ? coinRef.current : balance;
+  
+  return (loadingProfile) ? null : (
     <div className="flex bg-blue-400 p-3 fixed top-0 left-0 right-0 z-50">
       <div className="flex items-center gap-1 font-bold text-amber-500 h-8">
-        <span>🪙 {coinRef.current.toLocaleString()}</span>
+        <span>🪙 {displayedCoins.toLocaleString()}</span>
       </div>
       <div className="flex-1 text-center font-bold gap-1 text-amber-500 animate-pulse">
         <span>{winMessage}</span>

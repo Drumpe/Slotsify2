@@ -108,7 +108,6 @@ if (currentCoins < stake) {
     }
   }
 
-
   console.log(`[SPIN] user: ${userId}, bet: ${stake}, result: [${result}], payout: ${payout}`);
 
   interface SpinData {

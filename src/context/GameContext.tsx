@@ -21,6 +21,8 @@ type GameContextType = {
   setSpinResult: (val: number[] | null) => void;
   showCelebration: boolean;
   setCelebration: React.Dispatch<React.SetStateAction<boolean>>;
+  loadingProfile: boolean; 
+  setLoadingProfile: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -36,6 +38,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [username, setUsername] = useState('');
   const [spinResult, setSpinResult] = useState<number[] | null>(null);
   const [showCelebration, setCelebration] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   return (
     <GameContext.Provider value={{
@@ -49,6 +52,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       username, setUsername, 
       spinResult, setSpinResult,
       showCelebration, setCelebration,
+      loadingProfile, setLoadingProfile,
     }}>
       {children}
     </GameContext.Provider>

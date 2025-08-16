@@ -28,7 +28,7 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [stake, setStake] = useState(1);
   const [balance, setBalance] = useState(0);
-  const [coins, setCoins] = useState(0);
+  const [coins, setCoins] = useState(balance);
   const [payout, setPayout] = useState(0);
   const [isWin, setIsWin] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);

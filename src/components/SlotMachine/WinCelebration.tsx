@@ -15,7 +15,7 @@ interface Particle {
 
 export default function WinCelebration() {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const { payout, setCelebration, showCelebration } = useGame()
+  const { payout, showCelebration } = useGame()
   useEffect(() => {
     // Create particles
     const newParticles: Particle[] = [];

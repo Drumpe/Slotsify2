@@ -2,7 +2,7 @@ import { useGame } from '../../context/GameContext'
 import { useAuth } from '../../context/AuthContext'
 
 const SpinButton = () => {
-  const { stake, isSpinning, setIsSpinning, isTweening, setIsTweening, balance, setBalance, setSpinResult, setIsWin, setPayout, setCoins } = useGame()
+  const { stake, isSpinning, setIsSpinning, isTweening, setIsTweening, balance, setBalance, setSpinResult, setIsWin, setPayout, setCoins, setCelebration } = useGame()
   const { user } = useAuth()
 
   const handleSpin = async () => {

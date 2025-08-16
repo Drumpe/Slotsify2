@@ -41,10 +41,10 @@ const HeaderBar = () => {
 
   return (
     <div className="flex bg-blue-400 p-3 fixed top-0 left-0 right-0 z-50">
-      <div className="flex items-center gap-1 font-bold text-yellow-400 h-8">
+      <div className="flex items-center gap-1 font-bold text-amber-500 h-8">
         <span>🪙 {coinRef.current.toLocaleString()}</span>
       </div>
-      <div className="flex-1 text-center font-bold gap-1 text-yellow-400 animate-pulse">
+      <div className="flex-1 text-center font-bold gap-1 text-amber-500 animate-pulse">
         <span>{winMessage}</span>
       </div>
       {user && (

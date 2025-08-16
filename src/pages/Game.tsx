@@ -5,10 +5,11 @@ import HeaderBar from '../components/SlotMachine/HeaderBar';
 import Footer from '../components/SlotMachine/Footer'
 import Paytable from '../components/SlotMachine/Paytable';
 import SlotReels from '../components/SlotMachine/SlotReels';
+import WinCelebration from '../components/SlotMachine/WinCelebration';
 
 
 const Game = () => {
-  const { setBalance, setUsername, setCoins } = useGame()
+  const { setBalance, setUsername, setCoins, showCelebration } = useGame()
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -41,6 +42,7 @@ const Game = () => {
       <div className="flex-1 flex flex-col lg:flex-row gap-4 p-4 pt-16">
         <div className="flex-1 flex flex-col justify-center relative h-100 lg:h-140">
           <SlotReels />
+          {showCelebration && <WinCelebration />}
         </div>
         <div className="flex lg:block lg:w-80 xl:w-96">
           <Paytable />

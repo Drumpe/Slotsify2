@@ -61,7 +61,7 @@ export default function SlotReels() {
   const appRef = useRef<Application | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const { user } = useAuth();
-  const { spinResult, isSpinning, setIsTweening } = useGame();
+  const { spinResult, isSpinning, setIsTweening, setCelebration, payout } = useGame();
   const isSpinningRef = useRef(isSpinning);
   const [reels, setReels] = useState<ReelState[]>([]);
   const reelsStoppedCount = useRef(0);
@@ -80,8 +80,8 @@ export default function SlotReels() {
   }
 
   useEffect(() => {
-    if(!user) resetPixiContainer()
-  },[user])
+    if (!user) resetPixiContainer()
+  }, [user])
 
   useEffect(() => { isSpinningRef.current = isSpinning; }, [isSpinning]);
 
@@ -238,6 +238,10 @@ export default function SlotReels() {
         tweenTo(reel, targetPos, 1500 + (i * 400) / SPIN_SPEED, () => {
           reelsStoppedCount.current += 1;
           if (reelsStoppedCount.current === reels.length - 1) { //Need -1 here since tweening takes time
+            if (payout > 0) {
+              setCelebration(true);
+              setTimeout(() => setCelebration(false), 3000);
+            }
             setIsTweening(false);
           }
         });

@@ -43,10 +43,9 @@ npm install
 3️⃣ **Set up environment variables**  
 Create a `.env` file in the root directory:
 ```env
+SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
 VITE_SUPABASE_URL=<your-supabase-url>
 VITE_SUPABASE_ANON_KEY=<your-supabase-anon-key>
-SUPABASE_URL=<your-supabase-url>
-SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
 ```
 
 4️⃣ **Start the development server**

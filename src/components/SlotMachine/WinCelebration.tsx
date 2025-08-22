@@ -1,51 +1,8 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { useGame } from '../../context/GameContext'
 
-
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  color: string;
-  emoji: string;
-}
-
 export default function WinCelebration() {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const { payout, showCelebration } = useGame()
-  useEffect(() => {
-    // Create particles
-    const newParticles: Particle[] = [];
-    const particleCount = Math.min(30, Math.max(10, payout / 10));
-    const colors = ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FA9A', '#87CEEB'];
-    const emojis = ['🎉', '⭐', '💎', '🏆', '🎊', '✨', '💫', '🌟'];
-
-    for (let i = 0; i < particleCount; i++) {
-      newParticles.push({
-        id: i,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 10,
-        vy: (Math.random() - 0.5) * 10,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        emoji: emojis[Math.floor(Math.random() * emojis.length)]
-      });
-    }
-
-    setParticles(newParticles);
-
-    // Clear particles after animation
-    const timer = setTimeout(() => {
-      setParticles([]);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timer);
-    }
-  }, [showCelebration]);
+  const { payout } = useGame()
 
   return (
     <div className="fixed inset-0 pointer-events-none z-40">
@@ -75,34 +32,6 @@ export default function WinCelebration() {
         </div>
       </motion.div>
 
-      {/* Animated particles */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          initial={{ 
-            x: particle.x, 
-            y: particle.y,
-            opacity: 1,
-            scale: 0
-          }}
-          animate={{ 
-            x: particle.x + particle.vx * 100,
-            y: particle.y + particle.vy * 100,
-            opacity: 0,
-            scale: [0, 1, 0],
-            rotate: 360
-          }}
-          transition={{ 
-            duration: 3,
-            ease: "easeOut"
-          }}
-          className="absolute text-2xl pointer-events-none"
-          style={{ color: particle.color }}
-        >
-          {particle.emoji}
-        </motion.div>
-      ))}
-
       {/* Firework bursts */}
       {[...Array(5)].map((_, i) => (
         <motion.div
@@ -118,7 +47,7 @@ export default function WinCelebration() {
             scale: [0, 2, 4],
           }}
           transition={{ 
-            duration: 1.5,
+            duration: 2.5,
             delay: i * 0.3,
             ease: "easeOut"
           }}
@@ -148,7 +77,7 @@ export default function WinCelebration() {
           }}
           className="absolute w-2 h-4 rounded-sm"
           style={{ 
-            backgroundColor: ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FA9A'][i % 5]
+            backgroundColor: ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00FA9A'][i]
           }}
         />
       ))}

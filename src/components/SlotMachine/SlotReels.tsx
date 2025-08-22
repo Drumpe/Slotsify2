@@ -166,7 +166,7 @@ export default function SlotReels() {
         // If container has no height, maintain base aspect by deriving height
         const targetW = clientWidth || BASE_WIDTH;
         const aspect = BASE_WIDTH / BASE_HEIGHT;
-        const targetH = clientHeight || Math.round(targetW / aspect);
+        const targetH = Math.min(clientHeight, Math.round(targetW / aspect));
 
         // Fit stage with letterboxing
         const scale = Math.min(targetW / BASE_WIDTH, targetH / BASE_HEIGHT);

@@ -3,9 +3,9 @@ import { WIN_TABLE } from '../../../shared/winTable';
 import { useGame } from '../../context/GameContext';
 
 const symbols = Array.from({ length: 9 }, (_, i) => `/images/symbol_${i}.webp`);
-import symbol_empty from '/images/symbol_empty.webp';
+const symbol_empty = '/images/symbol_empty.webp';
 
-const SYMBOL_IMAGES: Record<string, string> = { '*': symbol_empty };
+const SYMBOL_IMAGES: Record<string, string> = { "*": symbol_empty };
 for (let i = 0; i <= 8; i++) {
   SYMBOL_IMAGES[i.toString()] = symbols[i];
 }

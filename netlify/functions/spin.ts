@@ -8,7 +8,7 @@ const supabase = createClient(
 )
 
 const SYMBOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-const WEIGHTS = [11, 12, 13, 14, 15, 16, 17, 18, 19]
+const WEIGHTS = [51, 72, 83, 94, 115, 126, 147, 168, 200]
 
 const KUMULATIVA_WEIGHTS: number[] = [];
 let totalWeight = 0;

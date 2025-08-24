@@ -116,9 +116,10 @@ const handler: Handler = async (event) => {
 
   // Update coins
   const { error: updateError } = await supabase
-    .from('profiles')
-    .update({ coins: newBalance })
-    .eq('id', userId)
+    .rpc('update_coins', {user_id: userId, amount: payout - stake })
+    // .from('profiles')
+    // .update({ coins: newBalance })
+    // .eq('id', userId)
 
   if (updateError) {
     return {

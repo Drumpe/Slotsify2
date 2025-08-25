@@ -40,7 +40,12 @@ cd slotsify2
 npm install
 ```
 
-3️⃣ **Set up environment variables**  
+3️⃣ **Create a Supabase project**
+- Sign up at [Supabase](https://supabase.com/) and create a new project.  
+- Set up the table for profile.
+- Enable authentication providers as needed (e.g., email/password).
+
+4️⃣ **Set up environment variables**  
 Create a `.env` file in the root directory:
 ```env
 SUPABASE_SERVICE_ROLE_KEY=<your-supabase-service-role-key>
@@ -48,14 +53,16 @@ VITE_SUPABASE_URL=<your-supabase-url>
 VITE_SUPABASE_ANON_KEY=<your-supabase-anon-key>
 ```
 
-4️⃣ **Start the development server**
+5️⃣ **Install Netlify CLI**
 ```bash
-npm run dev
+npm i netlify-cli
 ```
-or if you have netlify client installed
+
+6️⃣ **Start the development server**
 ```bash
 netlify dev
 ```
+
 ---
 
 ## Deployment (Netlify)

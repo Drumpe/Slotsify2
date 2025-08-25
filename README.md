@@ -82,7 +82,8 @@ netlify dev
 
 ## Usage
 
-1. **Sign Up** – Create an account with username, email, and password.  
+1. **Sign Up** – Create an account with username, email, and password.
+2. **Verify** - Verify your email, by clicking the email sent.
 2. **Log In** – Access your account and start spinning.  
 3. **Play** – Place bets, spin reels, and win coins based on the paytable.  
 
